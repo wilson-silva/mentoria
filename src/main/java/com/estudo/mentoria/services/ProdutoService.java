@@ -1,24 +1,29 @@
 package com.estudo.mentoria.services;
 
 import com.estudo.mentoria.entities.Produto;
-import com.estudo.mentoria.repositories.ProdutoRepository;
 import com.estudo.mentoria.exception.BadRequestException;
 import com.estudo.mentoria.exception.NotFoundException;
-import lombok.RequiredArgsConstructor;
+import com.estudo.mentoria.repositories.ProdutoRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class ProdutoService implements IService<Produto> {
 
     private final ProdutoRepository repository;
     private final CategoriaService categoriaService;
+
+    public ProdutoService(ProdutoRepository repository, CategoriaService categoriaService) {
+        this.repository = repository;
+        this.categoriaService = categoriaService;
+    }
+
 
     @Override
     public Page<Produto> findAll(Pageable pageable) {
@@ -66,6 +71,13 @@ public class ProdutoService implements IService<Produto> {
         produto.setEstado(false);
         repository.save(produto);
     }
+
+    public double somarPrecos(List<Produto> lista) {
+        return lista.stream()
+                .mapToDouble(Produto::getPreco)
+                .sum();
+    }
+
 }
 
 

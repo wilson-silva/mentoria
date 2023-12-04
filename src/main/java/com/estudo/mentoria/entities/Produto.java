@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
-@Data
 @Builder
+@Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,4 +28,6 @@ public class Produto {
     private String fabricante;
     @ManyToOne//(fetch = FetchType.EAGER)
     private Categoria categoria;
+
+
 }

@@ -40,7 +40,7 @@ services:
       - mentoria_data:/var/lib/mysql
 
 volumes:
-  devdojo_data:
+  mentoria_data:
 
 ```
 
@@ -50,10 +50,10 @@ volumes:
 git clone https://github.com/wilson-silva/mentoria.git
 
 
-# --- Rodar aplicação videoflix ---
+# --- Rodar aplicação mentoria ---
 
-# entrar na pasta do projeto videoflix
-cd aluraflix ou abrir o bash dentro da pasta
+# entrar na pasta do projeto mentoria
+cd mentoria ou abrir o bash dentro da pasta
 
 # executar o projeto
 ./mvnw spring-boot:run
@@ -88,6 +88,12 @@ adicionar no campo desta forma: "Bearer xxxxx..."
 Adicionado coleção do postman na raiz do projeto para importar e fazer os teste
 "mentoria.postman_collection.json"
 
+### Swagger documentação
+
+```bash
+# para acessar a documentação desta API
+localhost:8080/swagger-ui.html
+```
 
 ### Técnicas e tecnologias utilizadas
 - Java

@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -31,14 +32,25 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authz -> authz
-                                .requestMatchers(HttpMethod.POST, "/autenticar/login").permitAll()
-                                .anyRequest().authenticated()
+                        .requestMatchers(HttpMethod.POST, "/autenticar/login").permitAll()
+                        .requestMatchers(AUTH_WHITElIST).permitAll()
+                        .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .httpBasic(withDefaults());
         return http.build();
 
     }
+
+    private static final String[] AUTH_WHITElIST = {
+            "/swagger-ui.html",
+            "/swagger-ui.html/**",
+            "/swagger-ui/**",
+            "/v3/api-docs/**",
+            "/v3/api-docs.yaml",
+            "/api/v1/auth/**"
+    };
+
 
     //-------------------------------------------------------------------------------------------
     @Bean
@@ -52,4 +64,6 @@ public class SecurityConfiguration {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+
 }
